@@ -2,7 +2,7 @@ import React from 'react';
 import Anime from 'react-anime';
 import { InView } from 'react-intersection-observer';
 
-class AboutMeSection extends React.Component<any, any> {
+class ProjectsSection extends React.Component<any, any> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -39,9 +39,9 @@ class AboutMeSection extends React.Component<any, any> {
 
   render() {
     const { inView } = this.state
-    console.log("AboutMe: ", inView)
+    console.log("Projects: ", inView)
     return(
-      <div className="aboutme-anime-wrapper" id="aboutme-container">
+      <div className="aboutme-anime-wrapper" id="projects-container">
         {
           inView ? 
           <Anime 
@@ -54,8 +54,8 @@ class AboutMeSection extends React.Component<any, any> {
             // complete={(a) => this.completeAnimationInView(a)}
             >
             <div className="about-me-container">
-              <InView as="div" id="aboutme" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
-                <span className="title">Hi, I'm Peter</span>
+              <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
+                <span className="title">Projects</span>
               </InView>
               <span className="sub-title">I'm a fullstack developer from New Zealand</span>
               <div className="links">
@@ -130,4 +130,4 @@ class AboutMeSection extends React.Component<any, any> {
   }
 }
 
-export default AboutMeSection;
+export default ProjectsSection;

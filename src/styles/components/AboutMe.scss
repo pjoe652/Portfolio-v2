@@ -1,0 +1,63 @@
+.aboutme-anime-wrapper {
+  height: 100vh;
+  width: max-content;
+
+  .about-me-container {
+    justify-content: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-left: 5rem;
+
+    &.hidden {
+      opacity: 0;
+    }
+  
+    .title {
+      font-weight: bold;
+      font-size: 7rem;
+    }
+  
+    .sub-title {
+      font-size: 2rem;
+    }
+  
+    .links {
+      display: flex;
+      margin-top: 2rem;
+  
+      a {
+        display: flex;
+        flex-direction: row;
+        margin-right: 2rem;
+        color: #66FCF1;
+        text-decoration: none;
+  
+        span {
+          font-size: 1.5rem;
+          align-self: center;
+          margin-left: 0.5rem;
+        }
+  
+        &:hover {
+          color: #C5C6C7;
+  
+          i {
+            transform: scale(1.4);
+          }
+        }
+  
+        i {
+          font-size: 1.5rem;
+          transition: all linear 0.2s;
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  .anime-container {
+    height: 100vh;
+  }
+}
