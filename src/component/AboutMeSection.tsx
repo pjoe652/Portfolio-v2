@@ -10,11 +10,10 @@ class AboutMeSection extends React.Component<any, any> {
       animationComplete: false
     }
   }
-
+  
   setInView = (inView, entry) => {
     const { pageReady } = this.props;
-    // debugger;
-    if (pageReady && inView) {
+    if (pageReady && inView ) {
       this.props.transitionColor(inView, entry)
       this.setState({
         inView: inView
@@ -39,7 +38,6 @@ class AboutMeSection extends React.Component<any, any> {
 
   render() {
     const { inView } = this.state
-    console.log("AboutMe: ", inView)
     return(
       <div className="aboutme-anime-wrapper" id="aboutme-container">
         {
@@ -48,7 +46,7 @@ class AboutMeSection extends React.Component<any, any> {
             className="anime-container "
             opacity={[0, 1]}
             translateY={'2em'}
-            delay={500}
+            delay={300}
             easing="easeOutElastic"
             scale={[.75, 1]}
             // complete={(a) => this.completeAnimationInView(a)}
@@ -75,7 +73,7 @@ class AboutMeSection extends React.Component<any, any> {
             </div>
           </Anime> :
           <div className="about-me-container hidden">
-            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)}>
+            <InView as="div" id="aboutme" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
               <span className="title">Hi, I'm Peter</span>
             </InView>
             <span className="sub-title">I'm a fullstack developer from New Zealand</span>

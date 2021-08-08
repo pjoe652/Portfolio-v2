@@ -7,6 +7,7 @@ import CanvasWrapper from './component/CanvasWrapper';
 import LocomotiveScroll from 'locomotive-scroll';
 import cx from 'classnames'
 import ProjectsSection from './component/ProjectsSection';
+import SectionTracker from './component/SectionTracker';
 
 const scroll = new LocomotiveScroll({
   getDirection: true
@@ -20,7 +21,8 @@ class Portfolio extends React.Component<any, any> {
       prevOrder: 0,
       order: 0,
       sections: ["aboutme", "work", "projects"],
-      backgroundColors: ["#1F2833", "#1A1A1D", "#2A1B3D"],
+      backgroundColors: ["#1F2833", "#F4976C", "#2A1B3D"],
+      fontColors: ["#66FCF1", "#303c6c", "#E98074"],
       scroll: new LocomotiveScroll({
         getDirection: true
       }),
@@ -43,32 +45,42 @@ class Portfolio extends React.Component<any, any> {
     if (enableScroll) {
       if (e.deltaY > 0) {
         // Down
-        // console.log("Move Down")
         const nextOrder = order + 1 < sections.length ? order + 1 : order;
-        scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`), { callback: () => {
-          this.setState({
-            enableScroll: true
-          })
-        }})
+        console.log("----------Start---------")
+        console.log("DOWN")
+        // console.log("Entry: ", entry.target.id)
+        console.log("Prev: ", order)
+        console.log("Next: ", nextOrder)
+        console.log("-----------End----------")
         this.setState({
           enableScroll: false,
           prevOrder: order,
           order: nextOrder
         })
+        scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`), { callback: () => {
+          this.setState({
+            enableScroll: true
+          })
+        }})
       } else {
         // Up
-        // console.log("Move Up")
         const nextOrder = order - 1 >= 0 ? order - 1 : 0;
-        scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`), { callback: () => {
-          this.setState({
-            enableScroll: true
-          })
-        }})
+        console.log("----------Start---------")
+        console.log("UP")
+        // console.log("Entry: ", entry.target.id)
+        console.log("Prev: ", order)
+        console.log("Next: ", nextOrder)
+        console.log("-----------End----------")
         this.setState({
           enableScroll: false,
           prevOrder: order,
           order: nextOrder
         })
+        scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`), { callback: () => {
+          this.setState({
+            enableScroll: true
+          })
+        }})
       }
     }
   }
@@ -77,15 +89,14 @@ class Portfolio extends React.Component<any, any> {
     const { order, sections, prevOrder } = this.state
     let tempPrevOrder = order;
     if (entry && entry.target) {
-      // debugger;
       let nextOrder = sections.indexOf(entry.target.id);
 
       if (inView && tempPrevOrder !== nextOrder) {
-        console.log("----------Start---------")
-        console.log("Entry: ", entry)
+        console.log("----------Start-Transition---------")
+        console.log("Entry: ", entry.target.id)
         console.log("Prev: ", tempPrevOrder)
         console.log("Next: ", nextOrder)
-        console.log("-----------End----------")
+        console.log("-----------End-Transition----------")
   
         this.setState({
           prevOrder: tempPrevOrder,
@@ -95,17 +106,29 @@ class Portfolio extends React.Component<any, any> {
     }
   }
 
+  jumpToSection = i => {
+    const { sections } = this.state
+    this.setState({
+      enableScroll: false,
+      prevOrder: i,
+      order: i
+    })
+    scroll.scrollTo(document.getElementById(`${sections[i]}-container`), { callback: () => {
+      this.setState({
+        enableScroll: true
+      })
+    }})
+  }
+
   render() {
-    const { backgroundColors, order, prevOrder, pageReady } = this.state
-
-    // console.log(prevOrder, order)
-
+    const { backgroundColors, order, prevOrder, pageReady, sections, fontColors, enableScroll } = this.state
     return (
-      <div className="portfolio-container color-transition" style={{["--backgroundColorFrom" as any]: backgroundColors[prevOrder], ["--backgroundColorTo" as any]: backgroundColors[order]}} data-scroll-container>
-        <CanvasWrapper />
-        <AboutMeSection transitionColor={this.transitionColor} pageReady={pageReady} order={order}/>
-        <WorkSection transitionColor={this.transitionColor} pageReady={pageReady} order={order}/>
-        <ProjectsSection transitionColor={this.transitionColor} pageReady={pageReady} order={order}/>
+      <div className="portfolio-container color-transition" style={{["--backgroundColorFrom" as any]: backgroundColors[prevOrder], ["--backgroundColorTo" as any]: backgroundColors[order], ["--fontColor" as any] : fontColors[order]}} data-scroll-container>
+        <SectionTracker sections={sections} order={order} jumpToSection={this.jumpToSection}/>
+        <CanvasWrapper mainColor={fontColors[order]} subColor={backgroundColors[order]} order={order}/>
+        <AboutMeSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll}/>
+        <WorkSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll}/>
+        <ProjectsSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll}/>
       </div>
     );
   }

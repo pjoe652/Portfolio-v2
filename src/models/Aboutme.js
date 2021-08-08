@@ -8,7 +8,7 @@ import { THREE } from "enable3d";
 import { useFrame } from '@react-three/fiber'
 import { a, useSpring } from "@react-spring/three";
 
-export default function Model() {
+export default function Model(props) {
   const group = useRef()
   const [active, setActive] = useState(false)
   const [hovered, setHover] = useState(false)
@@ -21,10 +21,10 @@ export default function Model() {
     group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, Math.sin(t / 8) / 40, 0.1)
   })
 
-  const { color, rotation } = useSpring({
-    position: reset ? [3.5, 5, 2.5] : [3.5, 1.4, 2.5],
+  const { color, rotation, position } = useSpring({
+    position: props.active ? [3.5, 1.4, 2.5] : [3.5, 5, 2.5],
     rotation: active ? [1.58, 0, Math.PI] : [1.58, 0, -Math.PI],
-    color: active ? '#45A29E' : 'white',
+    color: active ? props.mainColor : 'white',
     config: { mass: 10, tension: 1000, friction: 300, precision: 0.00001 },
     reset: true
   })
@@ -36,12 +36,13 @@ export default function Model() {
         geometry={nodes.Cylinder001.geometry}
         material={materials['Material.004']}
         mass={1}
-        position={[3.5, 1.4, 2.5]}
+        // position={[3.5, 1.4, 2.5]}
+        position={position}
         rotation={rotation}
         onClick={e => setActive(!active)}
         scale={[0.75, 0.1, 0.75]}
-        receiveShadow
-        castShadow
+        receiveShadow={props.active}
+        castShadow={props.active}
         onPointerOver={(e) => setHover(true)}
         onPointerOut={(e) => setHover(false)}
         >

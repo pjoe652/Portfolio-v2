@@ -13,8 +13,7 @@ class ProjectsSection extends React.Component<any, any> {
 
   setInView = (inView, entry) => {
     const { pageReady } = this.props;
-    // debugger;
-    if (pageReady && inView) {
+    if (pageReady && inView ) {
       this.props.transitionColor(inView, entry)
       this.setState({
         inView: inView
@@ -28,6 +27,7 @@ class ProjectsSection extends React.Component<any, any> {
 
   completeAnimationInView = (a) => {
     const { inView, animationComplete } = this.state
+    debugger;
     if (inView && !animationComplete) {
       a.restart();
 
@@ -39,25 +39,24 @@ class ProjectsSection extends React.Component<any, any> {
 
   render() {
     const { inView } = this.state
-    console.log("Projects: ", inView)
     return(
-      <div className="aboutme-anime-wrapper" id="projects-container">
+      <div className="projects-anime-wrapper" id="projects-container" style={{}}>
         {
           inView ? 
           <Anime 
             className="anime-container "
             opacity={[0, 1]}
             translateY={'2em'}
-            delay={500}
+            delay={300}
             easing="easeOutElastic"
             scale={[.75, 1]}
             // complete={(a) => this.completeAnimationInView(a)}
             >
-            <div className="about-me-container">
+            <div className="projects-container">
               <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
                 <span className="title">Projects</span>
               </InView>
-              <span className="sub-title">I'm a fullstack developer from New Zealand</span>
+              <span className="sub-title">This is the projects</span>
               <div className="links">
                 <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
                   <i className="fab fa-linkedin" id="linkedin" />
@@ -74,8 +73,8 @@ class ProjectsSection extends React.Component<any, any> {
               </div>
             </div>
           </Anime> :
-          <div className="about-me-container hidden">
-            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)}>
+          <div className="projects-container hidden">
+            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
               <span className="title">Hi, I'm Peter</span>
             </InView>
             <span className="sub-title">I'm a fullstack developer from New Zealand</span>

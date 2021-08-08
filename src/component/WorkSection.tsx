@@ -13,8 +13,7 @@ class WorkSection extends React.Component<any, any> {
 
   setInView = (inView, entry) => {
     const { pageReady } = this.props;
-    // debugger;
-    if (pageReady && inView) {
+    if (pageReady && inView ) {
       this.props.transitionColor(inView, entry)
       this.setState({
         inView: inView
@@ -40,25 +39,24 @@ class WorkSection extends React.Component<any, any> {
   render() {
     const { inView } = this.state
     console.log("Work: ", inView)
-    // if (inView === false) { debugger }
     return(
-      <div className="aboutme-anime-wrapper" id="work-container">
+      <div className="work-anime-wrapper" id="work-container">
         {
           inView ? 
           <Anime 
             className="anime-container "
             opacity={[0, 1]}
             translateY={'2em'}
-            delay={500}
+            delay={300}
             easing="easeOutElastic"
             scale={[.75, 1]}
             // complete={(a) => this.completeAnimationInView(a)}
             >
-            <div className="about-me-container">
+            <div className="work-container">
               <InView as="div" id="work" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
                 <span className="title">Work</span>
               </InView>
-              <span className="sub-title">I'm a fullstack developer from New Zealand</span>
+              <span className="sub-title">This is the work</span>
               <div className="links">
                 <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
                   <i className="fab fa-linkedin" id="linkedin" />
@@ -75,8 +73,8 @@ class WorkSection extends React.Component<any, any> {
               </div>
             </div>
           </Anime> :
-          <div className="about-me-container hidden">
-            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)}>
+          <div className="work-container hidden">
+            <InView as="div" id="work" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
               <span className="title">Hi, I'm Peter</span>
             </InView>
             <span className="sub-title">I'm a fullstack developer from New Zealand</span>
