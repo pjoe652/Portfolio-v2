@@ -6,7 +6,7 @@ import { useRef, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { THREE } from "enable3d";
 import { useFrame } from '@react-three/fiber'
-import { a, useSpring } from "@react-spring/three";
+import { a, config, useSpring } from "@react-spring/three";
 
 export default function Model(props) {
   const group = useRef()
@@ -21,11 +21,22 @@ export default function Model(props) {
     group.current.rotation.z = THREE.MathUtils.lerp(group.current.rotation.z, Math.sin(t / 8) / 40, 0.1)
   })
 
-  const { color, rotation, position } = useSpring({
-    position: props.active ? [3.5, 1.4, 2.5] : [3.5, 5, 2.5],
+  function positionViewMode(){
+    if (props.viewMode === "desktop") {
+      return props.active ? [3.5, 1.4, 2.5] : [3.5, 5, 2.5]
+    } else if (props.viewMode === "tablet") {
+      return props.active ? [3, 1.4, 2.5] : [3, 5, 2.5]
+    } else if (props.viewMode === "tabletSM") {
+      return props.active ? [2.5, 1.4, 2.5] : [2.5, 5, 2.5]
+    }
+  }
+
+  const { color, rotation, position, opacity } = useSpring({
+    position: positionViewMode(),
     rotation: active ? [1.58, 0, Math.PI] : [1.58, 0, -Math.PI],
     color: active ? props.mainColor : 'white',
-    config: { mass: 10, tension: 1000, friction: 300, precision: 0.00001 },
+    opacity: props.viewMode === "desktop" ? [1] : [0.5],
+    onRest: () => props.enableScroll,
     reset: true
   })
 
@@ -36,17 +47,16 @@ export default function Model(props) {
         geometry={nodes.Cylinder001.geometry}
         material={materials['Material.004']}
         mass={1}
-        // position={[3.5, 1.4, 2.5]}
         position={position}
         rotation={rotation}
         onClick={e => setActive(!active)}
         scale={[0.75, 0.1, 0.75]}
         receiveShadow={props.active}
         castShadow={props.active}
-        onPointerOver={(e) => setHover(true)}
-        onPointerOut={(e) => setHover(false)}
+        transparent
+        opacity={opacity}
         >
-          <a.meshStandardMaterial attach="material" color={color} />
+          <a.meshStandardMaterial attach="material" color={color} opacity={opacity} transparent/>
         </a.mesh>
     </group>
   )

@@ -12,9 +12,10 @@ class AboutMeSection extends React.Component<any, any> {
   }
   
   setInView = (inView, entry) => {
-    const { pageReady } = this.props;
-    if (pageReady && inView ) {
+    const { pageReady, order } = this.props;
+    if (pageReady && inView && order === 0 ) {
       this.props.transitionColor(inView, entry)
+      this.props.unlockScroll()
       this.setState({
         inView: inView
       })
@@ -25,104 +26,29 @@ class AboutMeSection extends React.Component<any, any> {
     }
   }
 
-  completeAnimationInView = (a) => {
-    const { inView, animationComplete } = this.state
-    if (inView && !animationComplete) {
-      a.restart();
-
-      this.setState({
-        animationComplete: true
-      })
-    }
-  }
-
   render() {
-    const { inView } = this.state
     return(
       <div className="aboutme-anime-wrapper" id="aboutme-container">
-        {
-          inView ? 
-          <Anime 
-            className="anime-container "
-            opacity={[0, 1]}
-            translateY={'2em'}
-            delay={300}
-            easing="easeOutElastic"
-            scale={[.75, 1]}
-            // complete={(a) => this.completeAnimationInView(a)}
-            >
-            <div className="about-me-container">
-              <InView as="div" id="aboutme" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
-                <span className="title">Hi, I'm Peter</span>
-              </InView>
-              <span className="sub-title">I'm a fullstack developer from New Zealand</span>
-              <div className="links">
-                <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
-                  <i className="fab fa-linkedin" id="linkedin" />
-                  <span>LinkedIn</span>
-                </a>
-                <a href="https://github.com/pjoe652">
-                  <i className="fab fa-github-square" />
-                  <span>Github</span>
-                </a>
-                <a href="mailto: p.joe97@hotmail.com">
-                  <i className="fas fa-envelope-square" />
-                  <span>Email</span>
-                </a>
-              </div>
-            </div>
-          </Anime> :
-          <div className="about-me-container hidden">
-            <InView as="div" id="aboutme" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
-              <span className="title">Hi, I'm Peter</span>
-            </InView>
-            <span className="sub-title">I'm a fullstack developer from New Zealand</span>
-            <div className="links">
-              <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
-                <i className="fab fa-linkedin" id="linkedin" />
-                <span>LinkedIn</span>
-              </a>
-              <a href="https://github.com/pjoe652">
-                <i className="fab fa-github-square" />
-                <span>Github</span>
-              </a>
-              <a href="mailto: p.joe97@hotmail.com">
-                <i className="fas fa-envelope-square" />
-                <span>Email</span>
-              </a>
-            </div>
+        <div className="about-me-container">
+          <InView as="div" id="aboutme" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
+            <span className="title">Hi, I'm Peter</span>
+          </InView>
+          <span className="sub-title">I'm a fullstack developer from New Zealand</span>
+          <div className="links">
+            <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
+              <i className="fab fa-linkedin" id="linkedin" />
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/pjoe652">
+              <i className="fab fa-github-square" />
+              <span>Github</span>
+            </a>
+            <a href="mailto: p.joe97@hotmail.com">
+              <i className="fas fa-envelope-square" />
+              <span>Email</span>
+            </a>
           </div>
-        }
-        {/* <Anime 
-            className="anime-container "
-            opacity={[0, 1]}
-            translateY={'2em'}
-            delay={500}
-            easing="easeOutElastic"
-            scale={[.75, 1]}
-            play={(a) => console.log(a)}
-            complete={(a) => this.completeAnimationInView(a)}>
-          <div className="about-me-container">
-            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)}>
-              <span className="title">Hi, I'm Peter</span>
-            </InView>
-            <span className="sub-title">I'm a fullstack developer from New Zealand</span>
-            <div className="links">
-              <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
-                <i className="fab fa-linkedin" id="linkedin" />
-                <span>LinkedIn</span>
-              </a>
-              <a href="https://github.com/pjoe652">
-                <i className="fab fa-github-square" />
-                <span>Github</span>
-              </a>
-              <a href="mailto: p.joe97@hotmail.com">
-                <i className="fas fa-envelope-square" />
-                <span>Email</span>
-              </a>
-            </div>
-          </div>
-        </Anime> */}
+        </div>
       </div>
     )
   }

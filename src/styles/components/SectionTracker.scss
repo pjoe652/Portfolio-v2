@@ -18,23 +18,22 @@
     height: 1rem;
     width: 1rem;
     border-radius: 50%;
-    border: 2px solid var(--backgroundColorFrom);
     cursor: pointer;
     transition: all 0.3s;
 
     &.color-transition {
-      border: 2px solid var(--backgroundColorTo);
+      border: 2px solid var(--fontColor);
     }
 
     &:hover {
       font-weight: bold;
-      color: black;
-      background-color: #66FCF1;
+      color: var(--backgroundColorTo);
+      background-color: var(--fontColor);
     }
 
     &.active {
-      color: black;
-      background-color: #66FCF1;
+      color: var(--backgroundColorTo);
+      background-color: var(--fontColor);
     }
   }
 }

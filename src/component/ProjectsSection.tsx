@@ -1,6 +1,8 @@
 import React from 'react';
 import Anime from 'react-anime';
 import { InView } from 'react-intersection-observer';
+import ai from '../assets/ai.gif';
+import card from '../assets/card.gif';
 
 class ProjectsSection extends React.Component<any, any> {
   constructor(props:any) {
@@ -12,9 +14,10 @@ class ProjectsSection extends React.Component<any, any> {
   }
 
   setInView = (inView, entry) => {
-    const { pageReady } = this.props;
-    if (pageReady && inView ) {
+    const { pageReady, order } = this.props;
+    if (pageReady && inView && order === 2 ) {
       this.props.transitionColor(inView, entry)
+      this.props.unlockScroll()
       this.setState({
         inView: inView
       })
@@ -25,105 +28,30 @@ class ProjectsSection extends React.Component<any, any> {
     }
   }
 
-  completeAnimationInView = (a) => {
-    const { inView, animationComplete } = this.state
-    debugger;
-    if (inView && !animationComplete) {
-      a.restart();
-
-      this.setState({
-        animationComplete: true
-      })
-    }
-  }
-
   render() {
-    const { inView } = this.state
+    const { inView, enableScroll } = this.state
     return(
       <div className="projects-anime-wrapper" id="projects-container" style={{}}>
-        {
-          inView ? 
-          <Anime 
-            className="anime-container "
-            opacity={[0, 1]}
-            translateY={'2em'}
-            delay={300}
-            easing="easeOutElastic"
-            scale={[.75, 1]}
-            // complete={(a) => this.completeAnimationInView(a)}
-            >
-            <div className="projects-container">
-              <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
-                <span className="title">Projects</span>
-              </InView>
-              <span className="sub-title">This is the projects</span>
-              <div className="links">
-                <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
-                  <i className="fab fa-linkedin" id="linkedin" />
-                  <span>LinkedIn</span>
-                </a>
-                <a href="https://github.com/pjoe652">
-                  <i className="fab fa-github-square" />
-                  <span>Github</span>
-                </a>
-                <a href="mailto: p.joe97@hotmail.com">
-                  <i className="fas fa-envelope-square" />
-                  <span>Email</span>
-                </a>
-              </div>
-            </div>
-          </Anime> :
-          <div className="projects-container hidden">
-            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={100}>
-              <span className="title">Hi, I'm Peter</span>
-            </InView>
-            <span className="sub-title">I'm a fullstack developer from New Zealand</span>
-            <div className="links">
-              <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
-                <i className="fab fa-linkedin" id="linkedin" />
-                <span>LinkedIn</span>
-              </a>
-              <a href="https://github.com/pjoe652">
-                <i className="fab fa-github-square" />
-                <span>Github</span>
-              </a>
-              <a href="mailto: p.joe97@hotmail.com">
-                <i className="fas fa-envelope-square" />
-                <span>Email</span>
-              </a>
-            </div>
+        <div className="projects-container">
+          <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)} trackVisibility={true} delay={1000}>
+            <span className="title">Projects</span>
+          </InView>
+          <div className="showcase-projects-container">
+            <a href="https://github.com/pjoe652/Big2-Frontend" className="showcase-project">
+              <img src={ai} className="showcase-project"/>
+            </a>
+            <a href="https://github.com/pjoe652/Computer-Vision-for-Assistive-Technology" className="showcase-project">
+              <img src={card} className="showcase-project"/>
+            </a>
           </div>
-        }
-        {/* <Anime 
-            className="anime-container "
-            opacity={[0, 1]}
-            translateY={'2em'}
-            delay={500}
-            easing="easeOutElastic"
-            scale={[.75, 1]}
-            play={(a) => console.log(a)}
-            complete={(a) => this.completeAnimationInView(a)}>
-          <div className="about-me-container">
-            <InView as="div" id="projects" onChange={(inView, entry) => this.setInView(inView, entry)}>
-              <span className="title">Hi, I'm Peter</span>
-            </InView>
-            <span className="sub-title">I'm a fullstack developer from New Zealand</span>
-            <div className="links">
-              <a href="https://www.linkedin.com/in/peter-joe-17673b186/">
-                <i className="fab fa-linkedin" id="linkedin" />
-                <span>LinkedIn</span>
-              </a>
-              <a href="https://github.com/pjoe652">
-                <i className="fab fa-github-square" />
-                <span>Github</span>
-              </a>
-              <a href="mailto: p.joe97@hotmail.com">
-                <i className="fas fa-envelope-square" />
-                <span>Email</span>
-              </a>
-            </div>
+          <span className="sub-title">You can see my other projects on Github</span>
+          <div className="links">
+            <a href="https://github.com/pjoe652">
+              <i className="fab fa-github-square" />
+              <span>Github</span>
+            </a>
           </div>
-        </Anime> */}
+        </div>
       </div>
     )
   }

@@ -9,9 +9,37 @@
     flex-direction: column;
     margin: auto;
     margin-left: 5rem;
+    position: absolute;
+    z-index: 100;
 
-    &.hidden {
-      opacity: 0;
+    .work-experience-section {
+      display: flex;
+      flex-direction: column;
+
+      .work-experience {
+        font-weight: bold;
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: translateX(-2rem);
+        transition: all 0.3s var(--delay);
+      }
+
+      &.visible {
+        .work-experience {
+          opacity: 1;
+          transform: translateX(0);
+
+          span {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+        }
+      }
     }
   
     .title {

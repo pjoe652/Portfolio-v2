@@ -6,14 +6,27 @@ import { a, useSpring } from "@react-spring/three";
 import CanvasWrapper from './component/CanvasWrapper';
 import LocomotiveScroll from 'locomotive-scroll';
 import cx from 'classnames'
+import { Tablet, TabletLand } from './constants/screenWidth';
 import ProjectsSection from './component/ProjectsSection';
 import SectionTracker from './component/SectionTracker';
+
+interface IPortfolioState {
+  prevOrder: number,
+  order: number,
+  sections: string[],
+  backgroundColors: string[],
+  fontColors: string[],
+  pageReady: boolean,
+  enableScroll: boolean,
+  orbit: boolean,
+  viewMode: string
+}
 
 const scroll = new LocomotiveScroll({
   getDirection: true
 })
 
-class Portfolio extends React.Component<any, any> {
+class Portfolio extends React.Component<{}, IPortfolioState> {
   constructor(props) {
     super(props);
 
@@ -23,87 +36,104 @@ class Portfolio extends React.Component<any, any> {
       sections: ["aboutme", "work", "projects"],
       backgroundColors: ["#1F2833", "#F4976C", "#2A1B3D"],
       fontColors: ["#66FCF1", "#303c6c", "#E98074"],
-      scroll: new LocomotiveScroll({
-        getDirection: true
-      }),
-      pageReady: false
+      pageReady: false,
+      enableScroll: false,
+      orbit: false,
+      viewMode: "desktop",
     }
   }
 
   componentDidMount(){
-    // scroll.on("scroll", this.scrollToNextElement)
     window.addEventListener("wheel", this.scrollToNextElement)
     this.setState({
       pageReady: true,
-      enableScroll: true
     })
+
+    this.updateViewMode()
+    window.addEventListener('resize', this.updateViewMode)
+
+    // Unlock scroll when transitions occur too fast
+    setInterval(this.unlockScroll, 3000)
+  }
+
+  
+
+  updateViewMode = () => {
+    if (window.innerWidth < Tablet) {
+      this.setState({
+        viewMode: "tabletSM"
+      })
+    } else if (window.innerWidth < TabletLand) {
+      this.setState({
+        viewMode: "tablet",
+      })
+    } else {
+      this.setState({
+        viewMode: "desktop",
+      })
+    }
   }
 
   scrollToNextElement = e => {
     const { order, sections, enableScroll } = this.state 
-    // console.log(e)
     if (enableScroll) {
       if (e.deltaY > 0) {
         // Down
         const nextOrder = order + 1 < sections.length ? order + 1 : order;
-        console.log("----------Start---------")
-        console.log("DOWN")
-        // console.log("Entry: ", entry.target.id)
-        console.log("Prev: ", order)
-        console.log("Next: ", nextOrder)
-        console.log("-----------End----------")
-        this.setState({
-          enableScroll: false,
-          prevOrder: order,
-          order: nextOrder
-        })
-        scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`), { callback: () => {
+        if (nextOrder === order) {
           this.setState({
-            enableScroll: true
+            enableScroll: true,
+            prevOrder: order,
+            order: nextOrder,
           })
-        }})
+        } else {
+          this.setState({
+            enableScroll: false,
+            prevOrder: order,
+            order: nextOrder,
+          })
+          scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`))
+        }
       } else {
         // Up
         const nextOrder = order - 1 >= 0 ? order - 1 : 0;
-        console.log("----------Start---------")
-        console.log("UP")
-        // console.log("Entry: ", entry.target.id)
-        console.log("Prev: ", order)
-        console.log("Next: ", nextOrder)
-        console.log("-----------End----------")
-        this.setState({
-          enableScroll: false,
-          prevOrder: order,
-          order: nextOrder
-        })
-        scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`), { callback: () => {
+        if (nextOrder === order) {
           this.setState({
-            enableScroll: true
+            enableScroll: true,
+            prevOrder: order,
+            order: nextOrder,
           })
-        }})
+        } else {
+          this.setState({
+            enableScroll: false,
+            prevOrder: order,
+            order: nextOrder,
+          })
+          scroll.scrollTo(document.getElementById(`${sections[nextOrder]}-container`))
+        }
       }
     }
   }
 
   transitionColor = (inView, entry) => {
-    const { order, sections, prevOrder } = this.state
+    const { order, sections } = this.state
     let tempPrevOrder = order;
     if (entry && entry.target) {
       let nextOrder = sections.indexOf(entry.target.id);
 
       if (inView && tempPrevOrder !== nextOrder) {
-        console.log("----------Start-Transition---------")
-        console.log("Entry: ", entry.target.id)
-        console.log("Prev: ", tempPrevOrder)
-        console.log("Next: ", nextOrder)
-        console.log("-----------End-Transition----------")
-  
         this.setState({
           prevOrder: tempPrevOrder,
-          order: nextOrder
+          order: nextOrder,
         })
       }
     }
+  }
+
+  unlockScroll = () => {
+    this.setState({
+      enableScroll: true,
+    })
   }
 
   jumpToSection = i => {
@@ -113,22 +143,72 @@ class Portfolio extends React.Component<any, any> {
       prevOrder: i,
       order: i
     })
-    scroll.scrollTo(document.getElementById(`${sections[i]}-container`), { callback: () => {
-      this.setState({
-        enableScroll: true
-      })
-    }})
+    scroll.scrollTo(document.getElementById(`${sections[i]}-container`))
   }
 
+  toggleOrbit = () => {
+    this.setState({
+      orbit: !this.state.orbit
+    })
+  }
+
+  // startTouch = (e) => {
+  //   initialX = e.touches[0].clientX;
+  //   initialY = e.touches[0].clientY;
+  // };
+  
+  // moveTouch = (e) => {
+  //   if (initialX === null || initialY === null) {
+  //     return;
+  //   } else {
+  //     var currentX = e.touches[0].clientX;
+  //     var currentY = e.touches[0].clientY;
+    
+  //     var diffX = initialX - currentX;
+  //     var diffY = initialY - currentY;
+    
+  //     if (Math.abs(diffX) > Math.abs(diffY)) {
+  //       // sliding horizontally
+  //       if (diffX > 0) {
+  //         // swiped left
+  //         console.log("swiped left");
+  //       } else {
+  //         // swiped right
+  //         console.log("swiped right");
+  //       }  
+  //     } else {
+  //       // sliding vertically
+  //       if (diffY > 0) {
+  //         // swiped up
+  //         console.log("swiped up");
+  //       } else {
+  //         // swiped down
+  //         console.log("swiped down");
+  //       }  
+  //     }
+    
+  //     initialX = null;
+  //     initialY = null;
+    
+  //     e.preventDefault();
+  //   }
+  // }
+
   render() {
-    const { backgroundColors, order, prevOrder, pageReady, sections, fontColors, enableScroll } = this.state
+    const { backgroundColors, order, prevOrder, pageReady, sections, fontColors, enableScroll, orbit, viewMode } = this.state
     return (
       <div className="portfolio-container color-transition" style={{["--backgroundColorFrom" as any]: backgroundColors[prevOrder], ["--backgroundColorTo" as any]: backgroundColors[order], ["--fontColor" as any] : fontColors[order]}} data-scroll-container>
-        <SectionTracker sections={sections} order={order} jumpToSection={this.jumpToSection}/>
-        <CanvasWrapper mainColor={fontColors[order]} subColor={backgroundColors[order]} order={order}/>
-        <AboutMeSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll}/>
-        <WorkSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll}/>
-        <ProjectsSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll}/>
+        {
+          viewMode === "desktop" || viewMode === "tablet" ?
+            <SectionTracker sections={sections} order={order} jumpToSection={this.jumpToSection} orbit={orbit} toggleOrbit={this.toggleOrbit}/>
+            :
+            <React.Fragment />
+
+        }
+        <CanvasWrapper mainColor={fontColors[order]} subColor={backgroundColors[order]} order={order} enableScroll={enableScroll} orbit={orbit} viewMode={viewMode}/>
+        <AboutMeSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll} unlockScroll={this.unlockScroll}/>
+        <WorkSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll} unlockScroll={this.unlockScroll}/>
+        <ProjectsSection transitionColor={this.transitionColor} pageReady={pageReady} order={order} enableScroll={enableScroll} unlockScroll={this.unlockScroll}/>
       </div>
     );
   }

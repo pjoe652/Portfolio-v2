@@ -7,6 +7,7 @@ import Orbit from '../models/Orbit';
 import { a, useSpring } from "@react-spring/three";
 import LocomotiveScroll from 'locomotive-scroll';
 import Work from '../models/Work';
+import Paperstack from '../models/Paperstack';
 
 const backgroundColors = ["#1A1A1D", "#1F2833"]
 const scroll = new LocomotiveScroll({
@@ -14,18 +15,24 @@ const scroll = new LocomotiveScroll({
 });
 
 export default function CanvasWrapper(props) {
-  console.log(props.order)
   return (
     <Canvas style={{"position": "fixed"}} shadows={true} camera={{position: [4.5,2,4.5], near: 0.1, far: 1000, zoom: 1.3}}>
       <hemisphereLight intensity={0.35} />
       <spotLight position={[15, 15, 15]} angle={0.3} penumbra={1} intensity={2} castShadow />
-      {/* <gridHelper args={[ 10,10, 'white', 'gray']} />
-      <Orbit /> */}
+      {
+        props.orbit ? 
+        <React.Fragment>
+          <gridHelper args={[ 10,10, 'white', 'gray']} />
+          <Orbit />
+        </React.Fragment>
+        :
+        <React.Fragment/>
+      }
       <Physics>
         <Plane />
-        <AboutMe mainColor={props.mainColor} active={props.order === 0}/>
-        <Work mainColor={props.mainColor} subColor={props.subColor} active={props.order === 1}/>
-        <AboutMe mainColor={props.mainColor} active={props.order === 2}/>
+        <AboutMe mainColor={props.mainColor} active={props.order === 0} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
+        <Paperstack mainColor={props.mainColor} active={props.order === 1} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
+        <Work mainColor={props.mainColor} active={props.order === 2} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
       </Physics>
     </Canvas>
   )
