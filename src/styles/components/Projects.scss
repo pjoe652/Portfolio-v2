@@ -12,6 +12,10 @@
     position: absolute;
     z-index: 100;
 
+    @media screen and (max-width: $phone) {
+      margin-left: 3rem;
+    }
+
     .showcase-projects-container {
       display: flex;
       flex-direction: row;
@@ -26,6 +30,16 @@
         transition: filter 0.3s;
         cursor: pointer;
 
+        @media screen and (max-width: $phone) {
+          height: 5rem;
+          filter: blur(0);
+        }
+
+        @media screen and (max-width: $phone-sm) {
+          height: 4rem;
+          filter: blur(0);
+        }
+
         &:hover {
           filter: blur(0);
         }
@@ -39,6 +53,10 @@
     .title {
       font-weight: bold;
       font-size: 7rem;
+
+      @media screen and (max-width: $phone) {
+        font-size: 4rem;
+      }
     }
   
     .sub-title {

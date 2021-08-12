@@ -1,28 +1,19 @@
 import React from 'react';
-import Anime from 'react-anime';
 import { InView } from 'react-intersection-observer';
 
-class AboutMeSection extends React.Component<any, any> {
-  constructor(props:any) {
-    super(props)
-    this.state = {
-      inView: false,
-      animationComplete: false
-    }
-  }
-  
-  setInView = (inView, entry) => {
+interface IAboutMeProps {
+  transitionColor: any,
+  pageReady: boolean,
+  order: number,
+  unlockScroll: any
+}
+
+class AboutMeSection extends React.Component<IAboutMeProps, {}> {
+  setInView = (inView: any, entry: any) => {
     const { pageReady, order } = this.props;
-    if (pageReady && inView && order === 0 ) {
+    if (pageReady && inView && order === 2 ) {
       this.props.transitionColor(inView, entry)
       this.props.unlockScroll()
-      this.setState({
-        inView: inView
-      })
-    } else {
-      this.setState({
-        inView: inView
-      })
     }
   }
 

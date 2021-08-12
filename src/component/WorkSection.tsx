@@ -1,19 +1,29 @@
-import React from 'react';
-import Anime from 'react-anime';
 import cx from 'classnames';
+import React from 'react';
 import { InView } from 'react-intersection-observer';
 import { workExperience } from '../constants/workExperience';
 
-class WorkSection extends React.Component<any, any> {
+interface IWorkState {
+  inView: boolean
+}
+
+interface IWorkProps {
+  transitionColor: any,
+  pageReady: boolean,
+  order: number,
+  unlockScroll: any,
+  viewMode: string
+}
+
+class WorkSection extends React.Component<IWorkProps, IWorkState> {
   constructor(props:any) {
     super(props)
     this.state = {
       inView: false,
-      animationComplete: false
     }
   }
 
-  setInView = (inView, entry) => {
+  setInView = (inView: any, entry: any) => {
     const { pageReady, order } = this.props;
     if (pageReady && inView && order === 1 ) {
       this.props.transitionColor(inView, entry)
@@ -29,7 +39,8 @@ class WorkSection extends React.Component<any, any> {
   }
 
   render() {
-    const { inView, enableScroll } = this.state
+    const { inView } = this.state
+    const { viewMode } = this.props
     return(
       <div className="work-anime-wrapper" id="work-container">
         <div className="work-container">
@@ -42,10 +53,14 @@ class WorkSection extends React.Component<any, any> {
           })}>
             {
               workExperience.map((work, i) => 
-                <div className="work-experience" style={{["--delay" as any] : `${i * 0.1 + 0.3}s`}}>
-                  {/* <span></span>{`${work.company} | ${work.position} | ${work.timeDuration}`} */}
-                  <span>{`${work.company}`}</span> | <span>{`${work.position}`}</span> | <span>{`${work.timeDuration}`}</span>
-                </div>
+                viewMode === "desktop" || viewMode === "tablet" ? 
+                  <div className="work-experience" style={{["--delay" as any] : `${i * 0.1 + 0.3}s`}}>
+                    <span>{`${work.company}`}</span> | <span>{`${work.position}`}</span> | <span>{`${work.timeDuration}`}</span>
+                  </div>
+                  :
+                  <div className="work-experience" style={{["--delay" as any] : `${i * 0.1 + 0.3}s`}}>
+                    <span className="location">{`${work.company}`}</span><br/><span>{`${work.position}`}</span><br/><span>{`${work.timeDuration}`}</span>
+                  </div>
               )
             }
           </div>

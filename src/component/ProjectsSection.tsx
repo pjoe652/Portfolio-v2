@@ -1,35 +1,25 @@
 import React from 'react';
-import Anime from 'react-anime';
 import { InView } from 'react-intersection-observer';
 import ai from '../assets/ai.gif';
 import card from '../assets/card.gif';
 
-class ProjectsSection extends React.Component<any, any> {
-  constructor(props:any) {
-    super(props)
-    this.state = {
-      inView: false,
-      animationComplete: false
-    }
-  }
+interface IPortfolioProps {
+  transitionColor: any,
+  pageReady: boolean,
+  order: number,
+  unlockScroll: any
+}
 
-  setInView = (inView, entry) => {
+class ProjectsSection extends React.Component<IPortfolioProps, {}> {
+  setInView = (inView: any, entry: any) => {
     const { pageReady, order } = this.props;
     if (pageReady && inView && order === 2 ) {
       this.props.transitionColor(inView, entry)
       this.props.unlockScroll()
-      this.setState({
-        inView: inView
-      })
-    } else {
-      this.setState({
-        inView: inView
-      })
     }
   }
 
   render() {
-    const { inView, enableScroll } = this.state
     return(
       <div className="projects-anime-wrapper" id="projects-container" style={{}}>
         <div className="projects-container">
@@ -38,10 +28,10 @@ class ProjectsSection extends React.Component<any, any> {
           </InView>
           <div className="showcase-projects-container">
             <a href="https://github.com/pjoe652/Big2-Frontend" className="showcase-project">
-              <img src={ai} className="showcase-project"/>
+              <img src={ai} className="showcase-project" alt="ai.png"/>
             </a>
             <a href="https://github.com/pjoe652/Computer-Vision-for-Assistive-Technology" className="showcase-project">
-              <img src={card} className="showcase-project"/>
+              <img src={card} className="showcase-project" alt="cardGame.png"/>
             </a>
           </div>
           <span className="sub-title">You can see my other projects on Github</span>

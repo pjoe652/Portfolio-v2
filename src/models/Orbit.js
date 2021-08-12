@@ -1,4 +1,4 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
+import { OrbitControls } from "@react-three/drei"
 
 
 export default function Camera(props) {

@@ -1,7 +1,5 @@
-import React from 'react';
-import Anime from 'react-anime';
-import { InView } from 'react-intersection-observer';
 import cx from 'classnames';
+import React from 'react';
 
 class SectionTracker extends React.Component<any, any> {
   render() {

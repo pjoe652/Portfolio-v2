@@ -2,6 +2,10 @@
   height: 100vh;
   width: max-content;
 
+  @media screen and (max-width: $phone) {
+    width: 100%;
+  }
+
   .about-me-container {
     justify-content: center;
     height: 100%;
@@ -15,10 +19,18 @@
     &.hidden {
       opacity: 0.1;
     }
+
+    @media screen and (max-width: $phone) {
+      margin-left: 3rem;
+    }
   
     .title {
       font-weight: bold;
       font-size: 7rem;
+
+      @media screen and (max-width: $phone) {
+        font-size: 3rem;
+      }
     }
   
     .sub-title {
@@ -28,6 +40,10 @@
     .links {
       display: flex;
       margin-top: 2rem;
+
+      @media screen and (max-width: $phone) {
+        flex-direction: column;
+      }
   
       a {
         display: flex;

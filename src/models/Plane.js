@@ -1,5 +1,4 @@
-import { Canvas } from '@react-three/fiber'
-import { Physics, usePlane, useBox } from '@react-three/cannon'
+import { usePlane } from '@react-three/cannon'
 
 export default function Plane(props) {
   const [ref] = usePlane(() => ({ mass: 0, rotation: [-Math.PI / 2, 0, 0], ...props }))

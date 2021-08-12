@@ -1,18 +1,11 @@
-import { Canvas } from '@react-three/fiber'
-import React, { useEffect, useState } from 'react';
-import { Physics } from '@react-three/cannon'
-import AboutMe from '../models/Aboutme'
-import Plane from '../models/Plane'
+import { Physics } from '@react-three/cannon';
+import { Canvas } from '@react-three/fiber';
+import React from 'react';
+import AboutMe from '../models/Aboutme';
 import Orbit from '../models/Orbit';
-import { a, useSpring } from "@react-spring/three";
-import LocomotiveScroll from 'locomotive-scroll';
-import Work from '../models/Work';
 import Paperstack from '../models/Paperstack';
-
-const backgroundColors = ["#1A1A1D", "#1F2833"]
-const scroll = new LocomotiveScroll({
-  getDirection: true,
-});
+import Plane from '../models/Plane';
+import Work from '../models/Work';
 
 export default function CanvasWrapper(props) {
   return (
