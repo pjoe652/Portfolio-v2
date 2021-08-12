@@ -26,22 +26,14 @@
         height: 10rem;
         margin-right: 1rem;
         box-shadow: 0rem 0rem 0.3rem 0.3rem rgba(0,0,0,0.5);
-        filter: blur(1px);
-        transition: filter 0.3s;
         cursor: pointer;
 
         @media screen and (max-width: $phone) {
           height: 5rem;
-          filter: blur(0);
         }
 
         @media screen and (max-width: $phone-sm) {
           height: 4rem;
-          filter: blur(0);
-        }
-
-        &:hover {
-          filter: blur(0);
         }
       }
     }

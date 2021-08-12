@@ -27,10 +27,10 @@ class ProjectsSection extends React.Component<IPortfolioProps, {}> {
             <span className="title">Projects</span>
           </InView>
           <div className="showcase-projects-container">
-            <a href="https://github.com/pjoe652/Big2-Frontend" className="showcase-project">
+            <a href="https://github.com/pjoe652/Computer-Vision-for-Assistive-Technology" className="showcase-project">
               <img src={ai} className="showcase-project" alt="ai.png"/>
             </a>
-            <a href="https://github.com/pjoe652/Computer-Vision-for-Assistive-Technology" className="showcase-project">
+            <a href="https://github.com/pjoe652/Big2-Frontend" className="showcase-project">
               <img src={card} className="showcase-project" alt="cardGame.png"/>
             </a>
           </div>
