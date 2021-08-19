@@ -23,9 +23,9 @@ export default function CanvasWrapper(props) {
       <Orbit orbitEnable={props.orbit}/>
       <Physics>
         <Plane />
-        <AboutMe mainColor={props.mainColor} active={props.order === 0} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
-        <Paperstack mainColor={props.mainColor} active={props.order === 1} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
-        <Work mainColor={props.mainColor} active={props.order === 2} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
+        <AboutMe active={props.order === 0} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
+        <Paperstack active={props.order === 1} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
+        <Work active={props.order === 2} enableScroll={props.enableScroll} viewMode={props.viewMode}/>
       </Physics>
     </Canvas>
   )

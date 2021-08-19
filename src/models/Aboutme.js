@@ -7,6 +7,7 @@ import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { THREE } from "enable3d";
 import { useRef, useState } from 'react';
+import { sectionDetails } from "../constants/sectionDetails";
 
 export default function Model(props) {
   const group = useRef()
@@ -32,7 +33,7 @@ export default function Model(props) {
   const { color, rotation, position, opacity } = useSpring({
     position: positionViewMode(),
     rotation: active ? [1.58, 0, Math.PI] : [1.58, 0, -Math.PI],
-    color: active ? props.mainColor : 'white',
+    color: active ? sectionDetails[0].fontColor : 'white',
     opacity: props.viewMode === "desktop" ? [1] : [0.5],
     onRest: () => props.enableScroll,
     reset: true

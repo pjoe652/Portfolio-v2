@@ -8,6 +8,7 @@ import { useFrame } from '@react-three/fiber';
 import { THREE } from 'enable3d';
 import { useRef, useState } from 'react';
 import code from '../assets/code.png';
+import { sectionDetails } from "../constants/sectionDetails";
 
 export default function Model(props) {
   const group = useRef()
@@ -33,7 +34,7 @@ export default function Model(props) {
   const { color, rotation, opacity, position } = useSpring({
     position: positionViewMode(),
     rotation: active ? [0, Math.PI, 0] : [0, -Math.PI, 0],
-    color: active ? props.mainColor : 'grey',
+    color: active ? sectionDetails[2].fontColor : 'grey',
     opacity: props.viewMode === "desktop" ? [1] : [0.5],
     onRest: () => props.enableScroll,
     reset: true
@@ -47,8 +48,6 @@ export default function Model(props) {
       <a.group scale={[0.34, 0.01, 0.30]} 
           position={position} 
           rotation={rotation} 
-          receiveShadow 
-          castShadow 
           onClick={e => setActive(!active)}
           color={color}
           receiveShadow={props.active}
