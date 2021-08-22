@@ -176,14 +176,7 @@ export default function Portfolio() {
 
   return (
     <div className="portfolio-container color-transition" style={{["--backgroundColorFrom" as any]: sectionDetails[pageOrder.prevOrder].backgroundColor, ["--backgroundColorTo" as any]: sectionDetails[pageOrder.order].backgroundColor, ["--fontColor" as any] : sectionDetails[pageOrder.order].fontColor}}>
-      {
-        viewMode !== "tabletSM" ?
-          <React.Fragment>
-            <SectionTracker order={pageOrder.order} jumpToSection={jumpToSection} orbit={orbit} toggleOrbit={toggleOrbit}/>
-          </React.Fragment>
-          :
-          <React.Fragment />
-      }
+      <SectionTracker order={pageOrder.order} jumpToSection={jumpToSection} orbit={orbit} toggleOrbit={toggleOrbit} viewMode={viewMode}/>
       <CanvasWrapper order={pageOrder.order} enableScroll={enableScroll} orbit={orbit} viewMode={viewMode}/>
       <AboutMeSection transitionColor={transitionColor} order={pageOrder.order} unlockScroll={unlockScroll}/>
       <WorkSection transitionColor={transitionColor} order={pageOrder.order} unlockScroll={unlockScroll} viewMode={viewMode}/>

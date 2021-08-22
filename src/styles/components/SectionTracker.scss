@@ -11,6 +11,10 @@
   place-content: center;
   text-align: center;
 
+  @media screen and (max-width: $tablet){
+    margin-right: -1rem;
+  }
+
   .section-circle {
     font-weight: bold;
     margin: 1rem;
@@ -20,6 +24,12 @@
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s;
+
+    @media screen and (max-width: $tablet){
+      width: 3px;
+      height: 3px;
+      padding: 3px;
+    }
 
     &.color-transition {
       border: 2px solid var(--fontColor);
