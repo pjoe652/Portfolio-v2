@@ -12,12 +12,12 @@ export default function Model(props) {
   const [active, setActive] = useState(false)
 
   function positionViewMode(){
-    if (props.viewMode === "desktop") {
+    if (props.viewMode === "desktop" || props.viewMode === "desktopLg") {
       return props.active ? [3.5, 1, 2.5] : [3.5, 5, 2.5]
     } else if (props.viewMode === "tablet") {
       return props.active ? [3, 1, 2.5] : [3, 5, 2.5]
     } else if (props.viewMode === "tabletSM") {
-      return props.active ? [2.5, 1, 2.5] : [2.5, 5, 2.5]
+      return props.active ? [2, 1, 2.5] : [2, 5, 2.5]
     }
   }
 
@@ -26,12 +26,13 @@ export default function Model(props) {
     positionSecondStack: props.active ? [0.32, 0, 0] : [0.32, 0, 0],
     rotation: active ? [0, 2 * Math.PI, 0] : [0, 0, 0],
     color: active ? sectionDetails[1].fontColor : 'white',
-    opacity: props.viewMode === "desktop" ? [1] : [0.5],
+    opacity: props.viewMode === "desktopLg" ? [1] : [0.025],
     onRest: () => props.enableScroll,
     reset: true
   })
 
   const { nodes } = useGLTF('/paperstack.glb')
+  console.log("paperstack transparency, ", opacity)
   return (
     <a.group 
       ref={group} 
@@ -41,6 +42,7 @@ export default function Model(props) {
       onClick={e => setActive(!active)}
       receiveShadow={props.active}
       castShadow={props.active}
+      opacity={opacity}
     >
       <a.mesh
         geometry={nodes.Stack_of_Paper002.geometry}

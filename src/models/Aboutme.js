@@ -21,7 +21,7 @@ export default function Model(props) {
   })
 
   function positionViewMode(){
-    if (props.viewMode === "desktop") {
+    if (props.viewMode === "desktop" || props.viewMode === "desktopLg") {
       return props.active ? [3.5, 1.4, 2.5] : [3.5, 5, 2.5]
     } else if (props.viewMode === "tablet") {
       return props.active ? [3, 1.4, 2.5] : [3, 5, 2.5]
@@ -34,12 +34,14 @@ export default function Model(props) {
     position: positionViewMode(),
     rotation: active ? [1.58, 0, Math.PI] : [1.58, 0, -Math.PI],
     color: active ? sectionDetails[0].fontColor : 'white',
-    opacity: props.viewMode === "desktop" ? [1] : [0.5],
+    opacity: props.viewMode === "desktopLg" ? [1] : [0.5],
     onRest: () => props.enableScroll,
     reset: true
   })
 
   const { nodes, materials } = useGLTF('/aboutme.glb')
+  console.log("aboutme transparency, ", opacity)
+
   return (
     <group ref={group} dispose={null}>
       <a.mesh
@@ -52,8 +54,6 @@ export default function Model(props) {
         scale={[0.75, 0.1, 0.75]}
         receiveShadow={props.active}
         castShadow={props.active}
-        transparent
-        opacity={opacity}
         >
           <a.meshStandardMaterial attach="material" color={color} opacity={opacity} transparent/>
         </a.mesh>

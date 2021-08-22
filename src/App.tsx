@@ -8,7 +8,7 @@ import CanvasWrapper from './component/CanvasWrapper';
 import ProjectsSection from './component/ProjectsSection';
 import SectionTracker from './component/SectionTracker';
 import WorkSection from './component/WorkSection';
-import { Tablet, TabletLand } from './constants/screenWidth';
+import { Desktop, Tablet, TabletLand } from './constants/screenWidth';
 import { sectionDetails } from './constants/sectionDetails';
 
 const scroll = new LocomotiveScroll({
@@ -127,8 +127,10 @@ export default function Portfolio() {
       setViewMode("tabletSM")
     } else if (window.innerWidth < TabletLand) {
       setViewMode("tablet")
-    } else {
+    } else if (window.innerWidth < Desktop){
       setViewMode("desktop")
+    } else {
+      setViewMode("desktopLg")
     }
   }
 
@@ -175,7 +177,7 @@ export default function Portfolio() {
   return (
     <div className="portfolio-container color-transition" style={{["--backgroundColorFrom" as any]: sectionDetails[pageOrder.prevOrder].backgroundColor, ["--backgroundColorTo" as any]: sectionDetails[pageOrder.order].backgroundColor, ["--fontColor" as any] : sectionDetails[pageOrder.order].fontColor}}>
       {
-        viewMode === "desktop" || viewMode === "tablet" ?
+        viewMode !== "tabletSM" ?
           <React.Fragment>
             <SectionTracker order={pageOrder.order} jumpToSection={jumpToSection} orbit={orbit} toggleOrbit={toggleOrbit}/>
           </React.Fragment>

@@ -22,7 +22,7 @@ export default function Model(props) {
   })
 
   function positionViewMode(){
-    if (props.viewMode === "desktop") {
+    if (props.viewMode === "desktop" || props.viewMode === "desktopLg") {
       return props.active ? [4, 1.4, 3.2] : [4, 5, 3.2]
     } else if (props.viewMode === "tablet") {
       return props.active ? [3.5, 1.4, 3.2] : [3.5, 5, 3.2]
@@ -35,7 +35,7 @@ export default function Model(props) {
     position: positionViewMode(),
     rotation: active ? [0, Math.PI, 0] : [0, -Math.PI, 0],
     color: active ? sectionDetails[2].fontColor : 'grey',
-    opacity: props.viewMode === "desktop" ? [1] : [0.5],
+    opacity: props.viewMode === "desktopLg" ? [1] : [0.5],
     onRest: () => props.enableScroll,
     reset: true
   })
@@ -55,17 +55,17 @@ export default function Model(props) {
           transparent
           opacity={opacity}
       >
-        <a.mesh geometry={nodes.Cube005.geometry} material={materials['Material.043']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} /> </a.mesh>
-        <a.mesh geometry={nodes.Cube005_1.geometry} material={materials['Material.044']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} /> </a.mesh>
-        <a.mesh geometry={nodes.Cube005_2.geometry} material={materials['Material.008']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} /> </a.mesh>
-        <a.mesh geometry={nodes.Cube005_3.geometry} material={materials['Material.040']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} /> </a.mesh>
-        <a.mesh geometry={nodes.Cube005_4.geometry} material={materials['Material.041']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} /> </a.mesh>
+        <a.mesh geometry={nodes.Cube005.geometry} material={materials['Material.043']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} transparent opacity={opacity}/> </a.mesh>
+        <a.mesh geometry={nodes.Cube005_1.geometry} material={materials['Material.044']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} transparent opacity={opacity}/> </a.mesh>
+        <a.mesh geometry={nodes.Cube005_2.geometry} material={materials['Material.008']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} transparent opacity={opacity}/> </a.mesh>
+        <a.mesh geometry={nodes.Cube005_3.geometry} material={materials['Material.040']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} transparent opacity={opacity}/> </a.mesh>
+        <a.mesh geometry={nodes.Cube005_4.geometry} material={materials['Material.041']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={color} transparent opacity={opacity}/> </a.mesh>
         <a.mesh geometry={nodes.Cube005_5.geometry} material={materials.Material} receiveShadow={props.active} castShadow={props.active} />
         <a.mesh geometry={nodes.Cube005_5.geometry} material={codeTexture} receiveShadow={props.active} castShadow={props.active}>
-          <a.meshBasicMaterial map={codeTexture}/>
+          <a.meshBasicMaterial map={codeTexture} transparent opacity={opacity}/>
         </a.mesh>
-        <a.mesh geometry={nodes.Cube005_6.geometry} material={materials['Material.002']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={'black'} /> </a.mesh>
-        <a.mesh geometry={nodes.Cube005_7.geometry} material={materials['Material.003']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={'black'} /> </a.mesh>
+        <a.mesh geometry={nodes.Cube005_6.geometry} material={materials['Material.002']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={'black'} transparent opacity={opacity}/> </a.mesh>
+        <a.mesh geometry={nodes.Cube005_7.geometry} material={materials['Material.003']} receiveShadow={props.active} castShadow={props.active}> <a.meshStandardMaterial attach="material" color={'black'} transparent opacity={opacity}/> </a.mesh>
       </a.group>
     </group>
   )

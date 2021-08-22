@@ -36,7 +36,7 @@ export default function WorkSection(props: IWorkProps) {
         })}>
           {
             workExperience.map((work, i) => 
-              viewMode === "desktop" || viewMode === "tablet" ? 
+              viewMode !== "phone" ? 
                 <div className="work-experience" style={{["--delay" as any] : `${i * 0.1 + 0.3}s`}}>
                   <span>{`${work.company}`}</span> | <span>{`${work.position}`}</span> | <span>{`${work.timeDuration}`}</span>
                 </div>
